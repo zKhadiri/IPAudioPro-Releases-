@@ -53,7 +53,10 @@ detect_python_version() {
 detect_ffmpeg_version() {
     if opkg status ffmpeg &>/dev/null; then
         FFMPEG_VERSION=$(opkg status ffmpeg | grep -i '^Version:' | awk '{print $2}' | cut -d'-' -f1)
-        
+        MAJOR_VERSION=$(echo "$FFMPEG_VERSION" | cut -d'.' -f1)
+        if (( MAJOR_VERSION > 4 )); then
+            FFMPEG_VERSION=$(echo "$FFMPEG_VERSION" | cut -d'.' -f1,2)
+        fi
         if [[ " ${SUPPORTED_FFMPEG_VERSIONS[@]} " =~ " $FFMPEG_VERSION " ]]; then
             echo -e "${GREEN}FFmpeg version $FFMPEG_VERSION is supported.${RESET}"
         else
@@ -64,7 +67,6 @@ detect_ffmpeg_version() {
     else
         echo -e "${YELLOW}FFmpeg is not installed. Installing FFmpeg...${RESET}"
         opkg update && opkg install ffmpeg
-
         if opkg status ffmpeg &>/dev/null; then
             detect_ffmpeg_version
         else
@@ -73,6 +75,7 @@ detect_ffmpeg_version() {
         fi
     fi
 }
+
 
 
 detect_cpu_arch() {
