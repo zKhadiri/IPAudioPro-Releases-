@@ -21,9 +21,9 @@ BASE_URL="https://raw.githubusercontent.com/zKhadiri/IPAudioPro-Releases-/refs/h
 
 
 SUPPORTED_FFMPEG_VERSIONS=(
-    4.4.3
-    6.1
-    7.1
+    4
+    6
+    7
 )
 
 
@@ -54,13 +54,11 @@ detect_ffmpeg_version() {
     if opkg status ffmpeg &>/dev/null; then
         FFMPEG_VERSION=$(opkg status ffmpeg | grep -i '^Version:' | awk '{print $2}' | cut -d'-' -f1)
         MAJOR_VERSION=$(echo "$FFMPEG_VERSION" | cut -d'.' -f1)
-        if (( MAJOR_VERSION > 4 )); then
-            FFMPEG_VERSION=$(echo "$FFMPEG_VERSION" | cut -d'.' -f1,2)
-        fi
-        if [[ " ${SUPPORTED_FFMPEG_VERSIONS[@]} " =~ " $FFMPEG_VERSION " ]]; then
-            echo -e "${GREEN}FFmpeg version $FFMPEG_VERSION is supported.${RESET}"
+
+        if [[ " ${SUPPORTED_FFMPEG_VERSIONS[@]} " =~ " $MAJOR_VERSION " ]]; then
+            echo -e "${GREEN}FFmpeg major version $MAJOR_VERSION is supported.${RESET}"
         else
-            echo -e "${YELLOW}FFmpeg version $FFMPEG_VERSION is not supported.${RESET}"
+            echo -e "${YELLOW}FFmpeg major version $MAJOR_VERSION is not supported.${RESET}"
             echo -e "${CYAN}Supported versions are: ${SUPPORTED_FFMPEG_VERSIONS[*]}${RESET}"
             exit 1
         fi
