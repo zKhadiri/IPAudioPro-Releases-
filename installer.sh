@@ -56,6 +56,7 @@ detect_ffmpeg_version() {
         MAJOR_VERSION=$(echo "$FFMPEG_VERSION" | cut -d'.' -f1)
         if (( MAJOR_VERSION > 4 )); then
             FFMPEG_VERSION=$(echo "$FFMPEG_VERSION" | cut -d'.' -f1,2)
+        fi
 
         if [[ " ${SUPPORTED_FFMPEG_VERSIONS[@]} " =~ " $MAJOR_VERSION " ]]; then
             echo -e "${GREEN}FFmpeg major version $MAJOR_VERSION is supported.${RESET}"
