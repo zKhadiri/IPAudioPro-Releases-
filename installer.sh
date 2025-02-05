@@ -58,6 +58,10 @@ detect_ffmpeg_version() {
             FFMPEG_VERSION=$(echo "$FFMPEG_VERSION" | cut -d'.' -f1,2)
         fi
 
+        if [[ "$MAJOR_VERSION" -eq 7 ]]; then
+            FFMPEG_VERSION=7.0
+        fi
+
         if [[ " ${SUPPORTED_FFMPEG_VERSIONS[@]} " =~ " $MAJOR_VERSION " ]]; then
             echo -e "${GREEN}FFmpeg major version $MAJOR_VERSION is supported.${RESET}"
         else
