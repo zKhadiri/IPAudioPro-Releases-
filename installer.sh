@@ -59,7 +59,7 @@ detect_ffmpeg_version() {
         fi
 
         if [[ "$MAJOR_VERSION" -eq 7 ]]; then
-            FFMPEG_VERSION=7.0
+            FFMPEG_VERSION=7.1
         fi
 
         if [[ " ${SUPPORTED_FFMPEG_VERSIONS[@]} " =~ " $MAJOR_VERSION " ]]; then
