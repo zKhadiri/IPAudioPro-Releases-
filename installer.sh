@@ -24,6 +24,7 @@ SUPPORTED_FFMPEG_VERSIONS=(
     4
     6
     7
+    8
 )
 
 
