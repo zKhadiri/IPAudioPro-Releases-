@@ -15,7 +15,7 @@ RESET='\033[0m'
 IPK=""
 ARCH=""
 PY_VER=""
-VERSION=1.5
+VERSION=1.6
 FFMPEG_VERSION=""
 BASE_URL="https://raw.githubusercontent.com/zKhadiri/IPAudioPro-Releases-/refs/heads/main"
 
@@ -63,7 +63,7 @@ detect_ffmpeg_version() {
             FFMPEG_VERSION=7.1
         fi
 
-        if [[ "$MAJOR_VERSION" -eq 7 ]]; then
+        if [[ "$MAJOR_VERSION" -eq 8 ]]; then
             FFMPEG_VERSION=8.0
         fi
 
