@@ -154,16 +154,20 @@ restart_box(){
 install_plugin() {
     welcome_message
     detect_cpu_arch
-    
+
     echo "Checking if IPAudioPro is installed..."
 
     INSTALLED_VERSION=$(opkg status enigma2-plugin-extensions-ipaudiopro | grep -i 'Version:' | awk '{print $2}' | sed 's/+.*//')
     echo "Current version: $VERSION"
-    
+
     if [[ -n "$INSTALLED_VERSION" ]]; then
         echo "Current installed version: $INSTALLED_VERSION"
 
-        if [[ "$(echo -e "$INSTALLED_VERSION\n$VERSION" | sort -V | tail -n1)" == "$VERSION" ]]; then
+        HIGHEST="$(echo -e "$INSTALLED_VERSION\n$VERSION" | sort -V | tail -n1)"
+
+        if [[ "$HIGHEST" == "$INSTALLED_VERSION" ]]; then
+            echo "IPAudioPro is already up to date (version $INSTALLED_VERSION). No action needed."
+        elif [[ "$HIGHEST" == "$VERSION" ]]; then
             echo "Newer version found. Installing version $VERSION..."
             opkg remove enigma2-plugin-extensions-ipaudiopro
             IPK_URL="${BASE_URL}/v${VERSION}/python${PY_VER}/${CPU_ARCH}/${IPK}"
@@ -171,8 +175,6 @@ install_plugin() {
             opkg install "/tmp/${IPK}"
             rm -f "/tmp/${IPK}"
             restart_box
-        else
-            echo "IPAudioPro is already up to date (version $INSTALLED_VERSION). No action needed."
         fi
     else
         echo "IPAudioPro is not installed. Installing..."
