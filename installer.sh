@@ -15,16 +15,20 @@ RESET='\033[0m'
 IPK=""
 ARCH=""
 PY_VER=""
-VERSION=1.7
+VERSION=1.8
 FFMPEG_VERSION=""
 BASE_URL="https://raw.githubusercontent.com/zKhadiri/IPAudioPro-Releases-/refs/heads/main"
 
 
 SUPPORTED_FFMPEG_VERSIONS=(
-    4
-    6
     7
     8
+)
+
+SUPPORTED_PYTHON_VERSIONS=(
+    3.12
+    3.13
+    3.14
 )
 
 
@@ -92,6 +96,14 @@ detect_cpu_arch() {
     echo "Checking Python version..."
     PY_VER=$(detect_python_version)
     echo "Python version: $PY_VER"
+
+    if [[ " ${SUPPORTED_PYTHON_VERSIONS[@]} " =~ " $PY_VER " ]]; then
+        echo -e "${GREEN}Python version $PY_VER is supported.${RESET}"
+    else
+        echo -e "${YELLOW}Python version $PY_VER is not supported.${RESET}"
+        echo -e "${CYAN}Supported versions are: ${SUPPORTED_PYTHON_VERSIONS[*]}${RESET}"
+        exit 1
+    fi
 
     echo "Checking FFmpeg version..."
     detect_ffmpeg_version
