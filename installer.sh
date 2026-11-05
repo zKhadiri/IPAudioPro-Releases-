@@ -15,7 +15,7 @@ RESET='\033[0m'
 IPK=""
 ARCH=""
 PY_VER=""
-VERSION=1.9
+VERSION=2.0
 FFMPEG_VERSION=""
 BASE_URL="https://raw.githubusercontent.com/zKhadiri/IPAudioPro-Releases-/refs/heads/main"
 
@@ -23,6 +23,7 @@ BASE_URL="https://raw.githubusercontent.com/zKhadiri/IPAudioPro-Releases-/refs/h
 SUPPORTED_FFMPEG_VERSIONS=(
     7
     8
+    9
 )
 
 SUPPORTED_PYTHON_VERSIONS=(
@@ -69,6 +70,10 @@ detect_ffmpeg_version() {
 
         if [[ "$MAJOR_VERSION" -eq 8 ]]; then
             FFMPEG_VERSION=8.0
+        fi
+
+        if [[ "$MAJOR_VERSION" -eq 9 ]]; then
+            FFMPEG_VERSION=9.0
         fi
 
         if [[ " ${SUPPORTED_FFMPEG_VERSIONS[@]} " =~ " $MAJOR_VERSION " ]]; then
